@@ -125,12 +125,12 @@ canvas{
     border-radius:24px 220px 32px 240px / 240px 32px 200px 24px;
     box-shadow:10px 10px 0 #000;
     padding:18px;
-    transform:scale(.8);
+    transform:scale(.85);
     opacity:0;
 }
 
 #main-card.show .card{
-    animation:cardIn .6s forwards;
+    animation:cardIn .55s cubic-bezier(.25,.9,.35,1) forwards;
 }
 
 .inner{
@@ -146,11 +146,11 @@ canvas{
     justify-content:center;
     gap:14px;
     opacity:0;
-    transform:translateY(-10px);
+    transform:translateY(-8px);
 }
 
 #main-card.show .eyes{
-    animation:fadeUp .4s .2s forwards;
+    animation:fadeUp .35s .15s forwards;
 }
 
 .eye{
@@ -183,6 +183,12 @@ canvas{
     top:55%;
     transform:translate(-50%,-50%);
 }
+
+/* 👉 MIRADA */
+#main-card.show .pupil{
+    animation:lookAround 7s 1.4s infinite ease-in-out;
+}
+
 .brow{
     position:absolute;
     top:-9px;
@@ -196,14 +202,14 @@ h3{
     margin:4px 0;
     font-size:.95rem;
     opacity:0;
-    transform:translateY(10px);
+    transform:translateY(8px);
 }
 
 #main-card.show h3:nth-of-type(1){
-    animation:fadeUp .4s .35s forwards;
+    animation:fadeUp .35s .32s forwards;
 }
 #main-card.show h3:nth-of-type(2){
-    animation:fadeUp .4s .45s forwards;
+    animation:fadeUp .35s .42s forwards;
 }
 
 h1{
@@ -212,11 +218,11 @@ h1{
     color:var(--red);
     text-shadow:2px 2px #fff,4px 4px #000;
     opacity:0;
-    transform:scale(.6);
+    transform:scale(.65);
 }
 
 #main-card.show h1{
-    animation:nameIn .5s .6s forwards;
+    animation:nameIn .45s .55s forwards;
 }
 
 .age{
@@ -227,11 +233,11 @@ h1{
     border-radius:50px;
     margin:10px 0;
     opacity:0;
-    transform:translateY(-10px);
+    transform:translateY(-6px);
 }
 
 #main-card.show .age{
-    animation:fadeDown .4s .8s forwards;
+    animation:fadeDown .35s .72s forwards;
 }
 
 /* ================= NOTA ================= */
@@ -240,12 +246,12 @@ h1{
     border:3px solid #000;
     padding:16px;
     margin-top:12px;
-    transform:rotate(-1deg) scale(.9);
+    transform:rotate(-1deg) scale(.92);
     opacity:0;
 }
 
 #main-card.show .note{
-    animation:noteIn .5s 1s forwards;
+    animation:noteIn .45s .95s forwards;
 }
 
 .detail span{display:block;font-weight:700}
@@ -271,7 +277,7 @@ h1{
 }
 
 #main-card.show .grinch-smile{
-    animation:smileIn .5s 1.3s forwards;
+    animation:smileIn .45s 1.25s forwards;
 }
 
 /* ================= ANIMACIONES ================= */
@@ -293,6 +299,16 @@ h1{
 @keyframes smileIn{
     to{transform:scaleX(1)}
 }
+
+/* 👀 MIRADA */
+@keyframes lookAround{
+    0%,100%{transform:translate(-50%,-50%)}
+    20%{transform:translate(-40%,-50%)}
+    40%{transform:translate(-60%,-50%)}
+    60%{transform:translate(-50%,-45%)}
+    80%{transform:translate(-50%,-50%)}
+}
+
 @keyframes blink{
     0%,92%,100%{transform:scaleY(0)}
     94%,96%{transform:scaleY(1)}
