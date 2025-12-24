@@ -34,13 +34,9 @@ canvas{
     justify-content:center;
     align-items:center;
     z-index:15;
-    opacity:1;
     transition:opacity .6s;
 }
-
-.fade-out{
-    opacity:0;
-}
+.fade-out{opacity:0}
 
 /* ================= REGALO ================= */
 .gift-container{
@@ -95,10 +91,7 @@ canvas{
     border:5px solid var(--green);
     border-radius:50% 50% 0 50%;
 }
-.bow::after{
-    right:0;
-    transform:scaleX(-1);
-}
+.bow::after{right:0;transform:scaleX(-1)}
 
 .tap-text{
     margin-top:50px;
@@ -107,11 +100,9 @@ canvas{
     animation:pulse 1s infinite alternate;
 }
 
-/* APERTURA */
 .opening .gift-lid{
     animation:lidFly .7s forwards cubic-bezier(.2,.8,.3,1.2);
 }
-
 .opening .gift-box-bottom{
     animation:boxDrop .6s forwards ease-in;
 }
@@ -134,8 +125,12 @@ canvas{
     border-radius:24px 220px 32px 240px / 240px 32px 200px 24px;
     box-shadow:10px 10px 0 #000;
     padding:18px;
-    transform:scale(0);
-    animation:pop .7s cubic-bezier(.68,-.55,.27,1.55) forwards;
+    transform:scale(.8);
+    opacity:0;
+}
+
+#main-card.show .card{
+    animation:cardIn .6s forwards;
 }
 
 .inner{
@@ -145,11 +140,17 @@ canvas{
     text-align:center;
 }
 
-/* OJOS */
+/* ================= OJOS ================= */
 .eyes{
     display:flex;
     justify-content:center;
     gap:14px;
+    opacity:0;
+    transform:translateY(-10px);
+}
+
+#main-card.show .eyes{
+    animation:fadeUp .4s .2s forwards;
 }
 
 .eye{
@@ -161,7 +162,6 @@ canvas{
     position:relative;
     overflow:hidden;
 }
-
 .eye:last-child{transform:scaleX(-1)}
 
 .eye::after{
@@ -183,7 +183,6 @@ canvas{
     top:55%;
     transform:translate(-50%,-50%);
 }
-
 .brow{
     position:absolute;
     top:-9px;
@@ -192,14 +191,32 @@ canvas{
     background:#000;
 }
 
-/* TEXTO */
-h3{margin:4px 0;font-size:.95rem}
+/* ================= TEXTO ================= */
+h3{
+    margin:4px 0;
+    font-size:.95rem;
+    opacity:0;
+    transform:translateY(10px);
+}
+
+#main-card.show h3:nth-of-type(1){
+    animation:fadeUp .4s .35s forwards;
+}
+#main-card.show h3:nth-of-type(2){
+    animation:fadeUp .4s .45s forwards;
+}
 
 h1{
     font-size:4.2rem;
     margin:6px 0;
     color:var(--red);
     text-shadow:2px 2px #fff,4px 4px #000;
+    opacity:0;
+    transform:scale(.6);
+}
+
+#main-card.show h1{
+    animation:nameIn .5s .6s forwards;
 }
 
 .age{
@@ -209,21 +226,29 @@ h1{
     border:3px solid #000;
     border-radius:50px;
     margin:10px 0;
+    opacity:0;
+    transform:translateY(-10px);
 }
 
-/* NOTA */
+#main-card.show .age{
+    animation:fadeDown .4s .8s forwards;
+}
+
+/* ================= NOTA ================= */
 .note{
     background:#fff3c4;
     border:3px solid #000;
     padding:16px;
     margin-top:12px;
-    transform:rotate(-1deg);
+    transform:rotate(-1deg) scale(.9);
+    opacity:0;
 }
 
-.detail span{
-    display:block;
-    font-weight:700;
+#main-card.show .note{
+    animation:noteIn .5s 1s forwards;
 }
+
+.detail span{display:block;font-weight:700}
 
 .stamp{
     margin-top:10px;
@@ -235,7 +260,7 @@ h1{
     transform:rotate(-4deg);
 }
 
-/* SONRISA */
+/* ================= SONRISA ================= */
 .grinch-smile{
     width:80px;
     height:40px;
@@ -243,23 +268,41 @@ h1{
     border-radius:0 0 80px 80px;
     margin:22px auto 0;
     transform:scaleX(0);
-    animation:smileIn .6s ease-out .9s forwards;
 }
 
-/* ANIMACIONES */
+#main-card.show .grinch-smile{
+    animation:smileIn .5s 1.3s forwards;
+}
+
+/* ================= ANIMACIONES ================= */
+@keyframes cardIn{
+    to{opacity:1;transform:scale(1)}
+}
+@keyframes fadeUp{
+    to{opacity:1;transform:translateY(0)}
+}
+@keyframes fadeDown{
+    to{opacity:1;transform:translateY(0)}
+}
+@keyframes nameIn{
+    to{opacity:1;transform:scale(1)}
+}
+@keyframes noteIn{
+    to{opacity:1;transform:rotate(-1deg) scale(1)}
+}
+@keyframes smileIn{
+    to{transform:scaleX(1)}
+}
+@keyframes blink{
+    0%,92%,100%{transform:scaleY(0)}
+    94%,96%{transform:scaleY(1)}
+}
 @keyframes shake{
     20%{transform:rotate(3deg)}
     40%{transform:rotate(-3deg)}
     60%{transform:rotate(4deg)}
     80%{transform:rotate(-4deg)}
 }
-
 @keyframes pulse{to{opacity:.6}}
-@keyframes pop{to{transform:scale(1)}}
-@keyframes blink{
-    0%,92%,100%{transform:scaleY(0)}
-    94%,96%{transform:scaleY(1)}
-}
-@keyframes smileIn{to{transform:scaleX(1)}}
 @keyframes lidFly{to{transform:translateY(-220px) rotate(-35deg);opacity:0}}
 @keyframes boxDrop{to{transform:translateY(180px) scale(.85);opacity:0}}
