@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Cumpleaños de Thiago</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --toxic-green: #89c926; /* Verde más chillón */
+            --grinch-fur: #4a7c13;
+            --santa-red: #e62225;
+            --grinch-yellow: #fcd93b;
+            --dark-bg: #111;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Mountains of Christmas', cursive;
+            background-color: var(--dark-bg);
+            color: #fff;
+            height: 100dvh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* --- PANTALLA REGALO (Intro) --- */
+        #intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #2a2a2a 0%, #000000 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .gift-container { position: relative; cursor: pointer; z-index: 101; }
+        .gift-box-bottom {
+            width: 130px; height: 110px;
+            background: var(--santa-red);
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 0 30px rgba(212, 36, 38, 0.6);
+            position: relative; z-index: 1;
+        }
+        .gift-lid {
+            position: absolute; top: -30px; left: -10px;
+            width: 150px; height: 40px;
+            background: var(--santa-red);
+            border-radius: 5px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+            z-index: 2; transform-origin: center bottom;
+        }
+        .ribbon-vertical {
+            position: absolute; left: 50%; top: 0;
+            transform: translateX(-50%); width: 25px; height: 100%;
+            background: var(--toxic-green);
+        }
+        .bow {
+            position: absolute; top: -40px; left: 50%;
+            transform: translateX(-50%); width: 70px; height: 35px;
+        }
+        .bow::before, .bow::after {
+            content: ''; position: absolute; width: 35px; height: 35px;
+            border: 6px solid var(--toxic-green);
+            border-radius: 50% 50% 0 50%; top: 0;
+        }
+        .bow::before { left: 0; transform: rotate(30deg); }
+        .bow::after { right: 0; transform: rotate(-30deg) scaleX(-1); }
+        .tap-text {
+            margin-top: 60px; font-size: 1.8rem; color: var(--toxic-green);
+            animation: pulse 1s infinite alternate; text-align: center;
+        }
+
+        /* --- NUEVA TARJETA "GRINCHIFY" --- */
+        #main-card {
+            display: none; opacity: 0;
+            position: relative;
+            width: 85%; max-width: 360px;
+            /* Forma irregular estilo Dr. Seuss */
+            border-radius: 25px 225px 25px 255px / 255px 25px 225px 25px;
+            background: var(--toxic-green);
+            /* Borde doble irregular */
+            border: 4px solid #000;
+            box-shadow: 10px 10px 0px #000;
+            padding: 20px;
+            text-align: center;
+            z-index: 10;
+            transform: rotate(-2deg); /* Ligeramente chueca */
+            color: #000;
+        }
+
+        .card-inner {
+            border: 2px dashed #000;
+            border-radius: 15px 180px 15px 200px / 200px 15px 180px 15px;
+            padding: 15px;
+            position: relative;
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* --- OJOS DEL GRINCH (CSS PURO) --- */
+        .grinch-eyes-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            transform: rotate(3deg);
+        }
+        .eye {
+            width: 50px; height: 30px;
+            background: var(--grinch-yellow);
+            border-radius: 0 100% 0 100%; /* Forma de hoja */
+            transform: rotate(-15deg);
+            border: 2px solid #000;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 0 5px orange;
+        }
+        .eye:last-child {
+            transform: scaleX(-1) rotate(-15deg); /* Espejo */
+        }
+        .pupil {
+            width: 4px; height: 18px;
+            background: #d00;
+            position: absolute;
+            left: 50%; top: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+        }
+        .eyebrow {
+            position: absolute;
+            top: -10px; left: 0;
+            width: 100%; height: 15px;
+            background: #000;
+            transform: rotate(10deg);
+        }
+
+        /* --- TIPOGRAFÍA Y TEXTOS --- */
+        h3 {
+            font-size: 1.1rem; margin: 5px 0;
+            font-weight: bold; transform: rotate(-3deg);
+        }
+
+        h1 {
+            font-size: clamp(3.5rem, 15vw, 5rem);
+            margin: 0;
+            color: var(--santa-red);
+            text-shadow: 2px 2px 0 #fff, 4px 4px 0 #000;
+            line-height: 0.8;
+            transform: rotate(3deg) skew(-5deg); /* Texto distorsionado */
+        }
+
+        .stamp-box {
+            display: inline-block;
+            background: #fff;
+            color: #000;
+            padding: 5px 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border: 2px solid #000;
+            border-radius: 50% 10% 60% 20%; /* Forma irregular */
+            margin: 10px 0;
+            transform: rotate(-5deg);
+        }
+
+        .details-container {
+            background: #fff;
+            border: 2px solid #000;
+            border-radius: 10px 50px 10px 30px; /* Chueco */
+            padding: 10px;
+            margin-top: 15px;
+            box-shadow: 5px 5px 0 rgba(0,0,0,0.2);
+            transform: rotate(1deg);
+        }
+
+        .detail-row {
+            font-size: 1.3rem;
+            margin: 8px 0;
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 5px;
+        }
+        .detail-row:last-child { border: none; }
+
+        .grumpy-note {
+            font-size: 1rem;
+            margin-top: 15px;
+            font-style: italic;
+            font-weight: bold;
+        }
+
+        .heart {
+            font-size: 3rem; color: var(--santa-red);
+            margin-top: 10px;
+            filter: drop-shadow(2px 2px 0 #000);
+            animation: heartbeat 1.5s infinite;
+        }
+
+        /* --- ANIMACIONES --- */
+        .shaking { animation: shake 2.5s infinite; }
+        .opening .gift-lid { animation: flyOff 0.8s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .opening .gift-box-bottom { animation: dropDown 0.6s forwards ease-in; }
+        .opening .tap-text { opacity: 0; transition: 0.3s; }
+
+        @keyframes shake {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(3deg); }
+            75% { transform: rotate(-3deg); }
+        }
+        @keyframes pulse { from { opacity: 0.7; transform: scale(0.95); } to { opacity: 1; transform: scale(1.05); } }
+        @keyframes flyOff { 0% { transform: translateY(0) rotate(0); } 100% { transform: translateY(-300px) rotate(-40deg); opacity: 0; } }
+        @keyframes dropDown { 0% { transform: translateY(0) scale(1); opacity: 1; } 100% { transform: translateY(150px) scale(0.8); opacity: 0; } }
+        
+        /* Entrada elástica y chueca para la carta */
+        @keyframes popInGrinch {
+            0% { transform: scale(0) rotate(20deg); opacity: 0; }
+            60% { transform: scale(1.1) rotate(-5deg); opacity: 1; }
+            100% { transform: scale(1) rotate(-2deg); opacity: 1; }
+        }
+        @keyframes heartbeat { 0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
+
+        .hidden { display: none !important; }
+        .show-card { display: block !important; animation: popInGrinch 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards; }
+    </style>
+</head>
+<body>
+
+    <canvas id="snowCanvas"></canvas>
+
+    <div id="intro-screen">
+        <div class="gift-container shaking" id="gift-container">
+            <div class="gift-lid">
+                <div class="ribbon-vertical" style="height: 100%;"></div>
+                <div class="bow"></div>
+            </div>
+            <div class="gift-box-bottom">
+                <div class="ribbon-vertical"></div>
+            </div>
+        </div>
+        <div class="tap-text">¡ÁBRELO YA!</div>
+    </div>
+
+    <div id="main-card">
+        <div class="card-inner">
+            
+            <div class="grinch-eyes-container">
+                <div class="eye"><div class="pupil"></div><div class="eyebrow"></div></div>
+                <div class="eye"><div class="pupil"></div><div class="eyebrow"></div></div>
+            </div>
+
+            <h3>ODIO LAS FIESTAS, PERO...</h3>
+            <h3>LA DE</h3>
+            
+            <h1>THIAGO</h1>
+
+            <div class="stamp-box">5 AÑOS</div>
+            
+            <div class="details-container">
+                <div class="detail-row">📅 Sábado, 27 Dic.</div>
+                <div class="detail-row">⏰ 3:00 PM</div>
+                <div class="detail-row">📍 Casa de Thiago</div>
+            </div>
+
+            <p class="grumpy-note">"¡Ven a comer pastel hasta reventar!"</p>
+
+            <div class="heart">❤️</div>
+        </div>
+    </div>
+
+    <script>
+        const introScreen = document.getElementById('intro-screen');
+        const giftContainer = document.getElementById('gift-container');
+        const mainCard = document.getElementById('main-card');
+        let isOpening = false;
+
+        introScreen.addEventListener('click', () => {
+            if(isOpening) return;
+            isOpening = true;
+            giftContainer.classList.remove('shaking');
+            giftContainer.classList.add('opening');
+            createConfettiExplosion();
+            setTimeout(() => {
+                introScreen.style.opacity = '0'; 
+                setTimeout(() => {
+                    introScreen.classList.add('hidden');
+                    mainCard.classList.add('show-card');
+                }, 400); 
+            }, 600);
+        });
+
+        // --- PARTICULAS (NIEVE + CONFETI) ---
+        const canvas = document.getElementById('snowCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+        const confettiColors = ['#e62225', '#89c926', '#fcd93b', '#000'];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor(isConfetti = false) {
+                this.isConfetti = isConfetti;
+                this.x = isConfetti ? width / 2 : Math.random() * width;
+                this.y = isConfetti ? height / 2 : Math.random() * height;
+                
+                if (isConfetti) {
+                    this.speedY = (Math.random() - 0.5) * 25;
+                    this.speedX = (Math.random() - 0.5) * 25;
+                    this.gravity = 0.5;
+                    this.size = Math.random() * 8 + 5;
+                    this.color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+                    this.rotation = Math.random() * 360;
+                    this.rotationSpeed = (Math.random() - 0.5) * 15;
+                    this.decay = true;
+                    this.life = 150;
+                } else {
+                    this.speedY = Math.random() * 1.5 + 0.5;
+                    this.speedX = Math.random() * 2 - 1;
+                    this.size = Math.random() * 3 + 1;
+                    this.color = Math.random() > 0.8 ? '#89c926' : '#FFF'; /* Nieve verde tóxica y blanca */
+                    this.decay = false;
+                }
+            }
+            update() {
+                if (this.isConfetti) {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    this.speedY += this.gravity;
+                    this.speedX *= 0.96;
+                    this.rotation += this.rotationSpeed;
+                    this.life--;
+                    if (this.life < 20) this.size *= 0.9;
+                } else {
+                    this.y += this.speedY;
+                    this.x += this.speedX;
+                    if (this.y > height) this.y = 0;
+                    if (this.x > width) this.x = 0;
+                    if (this.x < 0) this.x = width;
+                }
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                if (this.isConfetti) {
+                    ctx.save();
+                    ctx.translate(this.x, this.y);
+                    ctx.rotate(this.rotation * Math.PI / 180);
+                    ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
+                    ctx.restore();
+                } else {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+        }
+
+        const snowCount = window.innerWidth < 600 ? 50 : 100;
+        for (let i = 0; i < snowCount; i++) particles.push(new Particle(false));
+
+        function createConfettiExplosion() {
+            for (let i = 0; i < 120; i++) particles.push(new Particle(true));
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                if (particles[i].decay && particles[i].life <= 0) {
+                    particles.splice(i, 1);
+                    i--;
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>
