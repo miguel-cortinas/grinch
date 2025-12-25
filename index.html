@@ -1,64 +1,77 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Invitación Grinch</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <title>Fiesta de Thiago - 5 Años</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
-</head>
+    <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <meta name="color-scheme" content="dark only">
+    <meta name="theme-color" content="#0f0f0f">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta property="og:title" content="¡Estás invitado al cumple de Thiago!">
+    <meta property="og:description" content="Sábado 27 de Diciembre. ¡No faltes a mi fiesta estilo Grinch!">
+    <meta property="og:type" content="website">
+    </head>
 
 <body>
 
-<canvas id="snow"></canvas>
+    <canvas id="snow"></canvas>
 
-<!-- INTRO -->
-<div id="intro-screen">
-    <div class="gift-container" id="gift">
-        <div class="gift-lid">
-            <div class="ribbon"></div>
-            <div class="bow"></div>
+    <div id="intro-screen">
+        <div class="gift-container" id="gift">
+            <div class="gift-lid">
+                <div class="ribbon"></div>
+                <div class="bow"></div>
+            </div>
+            <div class="gift-box-bottom">
+                <div class="ribbon"></div>
+            </div>
         </div>
-        <div class="gift-box-bottom">
-            <div class="ribbon"></div>
-        </div>
+        <div class="tap-text">¡ÁBRELO!</div>
     </div>
-    <div class="tap-text">¡ÁBRELO!</div>
-</div>
 
-<!-- INVITACIÓN -->
-<div id="main-card">
-    <div class="card">
+    <div id="main-card">
+        <main class="card">
             <div class="lights">
                 <span></span><span></span><span></span><span></span><span></span>
                 <span></span><span></span><span></span><span></span><span></span>
             </div>
-        <div class="inner">
 
-            <div class="eyes">
-                <div class="eye"><div class="brow"></div><div class="pupil"></div></div>
-                <div class="eye"><div class="brow"></div><div class="pupil"></div></div>
+            <div class="inner">
+                <div class="eyes">
+                    <div class="eye"><div class="brow"></div><div class="pupil"></div></div>
+                    <div class="eye"><div class="brow"></div><div class="pupil"></div></div>
+                </div>
+
+                <h3><br><br>¡TE INVITO A MI FIESTA!</h3>
+
+                <h1>THIAGO</h1>
+                <div class="age">5 AÑOS</div>
+
+                <div class="note">
+                    <div class="detail">SÁBADO<span>27 DE DICIEMBRE</span></div>
+                    <div class="detail">HORA<span>3:00 PM</span></div>
+                    
+                    <a href="https://www.google.com/maps/search/?api=1&query=Mina+del+Refugio+4850+Robinson+Chihuahua" target="_blank" class="map-link">
+                        <div class="detail">
+                            LUGAR
+                            <span>Mina del Refugio 4850, Robinson</span>
+                        </div>
+                    </a>
+
+                    <div class="stamp">¡NO FALTES!</div>
+                </div>
+
+                <div class="grinch-smile"></div>
             </div>
-
-            <h3><br><br>¡TE INVITO A MI FIESTA!</h3>
-
-            <h1>THIAGO</h1>
-            <div class="age">5 AÑOS</div>
-
-            <div class="note">
-                <div class="detail">SÁBADO<span>27 DE DICIEMBRE</span></div>
-                <div class="detail">HORA<span>3:00 PM</span></div>
-                <div class="detail">LUGAR<span>Mina del Refugio 4850, Robinson</span></div>
-                <div class="stamp">¡NO FALTES!</div>
-            </div>
-
-            <div class="grinch-smile"></div>
-
-        </div>
+        </main>
     </div>
-</div>
 
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

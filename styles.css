@@ -1,417 +1,370 @@
-:root{
-    --green:#89c926;
-    --dark-green:#5a8d1b;
-    --red:#e62225;
-    --yellow:#fcd93b;
-    --bg:#0f0f0f;
+:root {
+    --green: #89c926;
+    --dark-green: #5a8d1b;
+    --red: #e62225;
+    --yellow: #fcd93b;
+    --bg: #0f0f0f;
+    
+    /* CRÍTICO: Fuerza a los controles del navegador a ser oscuros */
+    color-scheme: dark;
 }
 
-*{box-sizing:border-box}
-
-body{
-    margin:0;
-    font-family:'Mountains of Christmas',cursive;
-    background:var(--bg);
-    height:100vh;
-    overflow:hidden;
+* {
+    box-sizing: border-box;
+    /* Deshabilita la selección de texto para que parezca una app nativa */
+    -webkit-tap-highlight-color: transparent; 
 }
 
-/* CANVAS */
-canvas{
-    position:fixed;
-    inset:0;
-    z-index:20;
-    pointer-events:none;
+body {
+    margin: 0;
+    font-family: 'Mountains of Christmas', cursive;
+    background: var(--bg);
+    height: 100vh;
+    overflow: hidden;
+    /* Evita el efecto de "rebote" al hacer scroll en los bordes (iOS) */
+    overscroll-behavior: none; 
+}
+
+/* CANVAS DE NIEVE */
+canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    pointer-events: none;
 }
 
 /* ================= INTRO ================= */
-#intro-screen{
-    position:fixed;
-    inset:0;
-    background:radial-gradient(circle,#2a2a2a,#000);
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    z-index:15;
-    transition:opacity .6s;
+#intro-screen {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle, #2a2a2a, #000);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 15;
+    transition: opacity .6s;
 }
-.fade-out{opacity:0}
+
+.fade-out { opacity: 0; pointer-events: none; }
 
 /* ================= REGALO ================= */
-.gift-container{
-    position:relative;
-    cursor:pointer;
-    animation:shake 2.5s infinite;
-    transform:scale(1.02);
+.gift-container {
+    position: relative;
+    cursor: pointer;
+    animation: shake 2.5s infinite;
+    transform: scale(1.02);
 }
 
-.gift-box-bottom{
-    width:124px;
-    height:104px;
-    background:var(--red);
-    border-radius:0 0 15px 15px;
-    box-shadow:0 9px 26px rgba(230,34,37,.7);
+.gift-box-bottom {
+    width: 124px;
+    height: 104px;
+    background: var(--red);
+    border-radius: 0 0 15px 15px;
+    box-shadow: 0 9px 26px rgba(230, 34, 37, .7);
 }
 
-.gift-lid{
-    position:absolute;
-    top:-30px;
-    left:-11px;
-    width:146px;
-    height:40px;
-    background:var(--red);
-    border-radius:9px;
-    box-shadow:0 7px 17px rgba(0,0,0,.4);
+.gift-lid {
+    position: absolute;
+    top: -30px;
+    left: -11px;
+    width: 146px;
+    height: 40px;
+    background: var(--red);
+    border-radius: 9px;
+    box-shadow: 0 7px 17px rgba(0, 0, 0, .4);
+    z-index: 2;
 }
 
-.ribbon{
-    position:absolute;
-    left:50%;
-    transform:translateX(-50%);
-    width:24px;
-    height:100%;
-    background:var(--green);
+.ribbon {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 100%;
+    background: var(--green);
 }
 
-.bow{
-    position:absolute;
-    top:-36px;
-    left:50%;
-    transform:translateX(-50%);
-    width:62px;
-    height:32px;
+.bow {
+    position: absolute;
+    top: -36px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 62px;
+    height: 32px;
 }
 
-.bow::before,
-.bow::after{
-    content:"";
-    position:absolute;
-    width:32px;
-    height:32px;
-    border:5px solid var(--green);
-    border-radius:50% 50% 0 50%;
+.bow::before, .bow::after {
+    content: "";
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border: 5px solid var(--green);
+    border-radius: 50% 50% 0 50%;
 }
-.bow::after{right:0;transform:scaleX(-1)}
+.bow::after { right: 0; transform: scaleX(-1); }
 
-.tap-text{
-    margin-top:56px;
-    font-size:1.7rem;
-    color:var(--green);
-    animation:pulse 1s infinite alternate;
+.tap-text {
+    margin-top: 56px;
+    font-size: 1.7rem;
+    color: var(--green);
+    animation: pulse 1s infinite alternate;
 }
 
 /* APERTURA */
-.opening .gift-lid{
-    animation:lidFly .7s forwards cubic-bezier(.2,.8,.3,1.2);
+.opening .gift-lid {
+    animation: lidFly .7s forwards cubic-bezier(.2, .8, .3, 1.2);
 }
-.opening .gift-box-bottom{
-    animation:boxDrop .6s forwards ease-in;
+.opening .gift-box-bottom {
+    animation: boxDrop .6s forwards ease-in;
 }
 
 /* ================= INVITACIÓN ================= */
-#main-card{
-    display:none;
-    position:fixed;
-    inset:0;
-    z-index:5;
-    justify-content:center;
-    align-items:center;
+#main-card {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 5;
+    justify-content: center;
+    align-items: center;
 }
 
-.card{
-    width:92%;
-    max-width:380px;
-    background:linear-gradient(160deg,#9fe23a,#7fbf1f);
-    border:4px solid #000;
-    border-radius:26px 220px 34px 240px / 240px 34px 210px 26px;
-    box-shadow:11px 11px 0 #000;
-    padding:20px;
-    transform:scale(.92);
-    opacity:0;
+.card {
+    width: 92%;
+    max-width: 380px;
+    background: linear-gradient(160deg, #9fe23a, #7fbf1f);
+    border: 4px solid #000;
+    border-radius: 26px 220px 34px 240px / 240px 34px 210px 26px;
+    box-shadow: 11px 11px 0 #000;
+    padding: 20px;
+    transform: scale(.92);
+    opacity: 0;
+    position: relative;
 }
 
-#main-card.show .card{
-    animation:cardIn .55s cubic-bezier(.25,.9,.35,1) forwards;
+#main-card.show .card {
+    animation: cardIn .55s cubic-bezier(.25, .9, .35, 1) forwards;
 }
 
-.inner{
-    border:3px dashed #000;
-    padding:20px 16px 24px;
-    background:rgba(255,255,255,.15);
-    text-align:center;
+.inner {
+    border: 3px dashed #000;
+    padding: 20px 16px 24px;
+    background: rgba(255, 255, 255, .15);
+    text-align: center;
 }
 
 /* ================= OJOS ================= */
-.eyes{
-    display:flex;
-    justify-content:center;
-    gap:16px;
-    opacity:0;
-    transform:translateY(-9px);
+.eyes {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    opacity: 0;
+    transform: translateY(-9px);
+}
+#main-card.show .eyes { animation: fadeUp .35s .15s forwards; }
+
+.eye {
+    width: 48px;
+    height: 30px;
+    background: var(--yellow);
+    border: 3px solid #000;
+    border-radius: 0 100% 0 100%;
+    position: relative;
+    overflow: hidden;
+}
+.eye:last-child { transform: scaleX(-1); }
+
+.eye::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--yellow);
+    transform-origin: center top;
+    transform: scaleY(0);
+    animation: blink 6s infinite;
 }
 
-#main-card.show .eyes{
-    animation:fadeUp .35s .15s forwards;
+.pupil {
+    width: 4px;
+    height: 20px;
+    background: #b00000;
+    position: absolute;
+    left: 50%;
+    top: 55%;
+    transform: translate(-50%, -50%);
 }
+#main-card.show .pupil { animation: lookAround 7s 1.4s infinite ease-in-out; }
 
-.eye{
-    width:48px;
-    height:30px;
-    background:var(--yellow);
-    border:3px solid #000;
-    border-radius:0 100% 0 100%;
-    position:relative;
-    overflow:hidden;
-}
-.eye:last-child{transform:scaleX(-1)}
-
-.eye::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:var(--yellow);
-    transform-origin:center top;
-    transform:scaleY(0);
-    animation:blink 6s infinite;
-}
-
-.pupil{
-    width:4px;
-    height:20px;
-    background:#b00000;
-    position:absolute;
-    left:50%;
-    top:55%;
-    transform:translate(-50%,-50%);
-}
-
-#main-card.show .pupil{
-    animation:lookAround 7s 1.4s infinite ease-in-out;
-}
-
-.brow{
-    position:absolute;
-    top:-10px;
-    width:100%;
-    height:13px;
-    background:#000;
+.brow {
+    position: absolute;
+    top: -10px;
+    width: 100%;
+    height: 13px;
+    background: #000;
 }
 
 /* ================= TEXTO ================= */
-h3{
-    margin:5px 0;
-    font-size:1.2rem;
-    opacity:0;
-    transform:translateY(9px);
+h3 {
+    margin: 5px 0;
+    font-size: 1.2rem;
+    opacity: 0;
+    transform: translateY(9px);
 }
+#main-card.show h3:nth-of-type(1) { animation: fadeUp .35s .32s forwards; }
+#main-card.show h3:nth-of-type(2) { animation: fadeUp .35s .42s forwards; }
 
-#main-card.show h3:nth-of-type(1){
-    animation:fadeUp .35s .32s forwards;
+h1 {
+    font-size: 4.5rem;
+    margin: 7px 0;
+    color: var(--red);
+    text-shadow: 2px 2px #fff, 4px 4px #000;
+    opacity: 0;
+    transform: scale(.65);
 }
-#main-card.show h3:nth-of-type(2){
-    animation:fadeUp .35s .42s forwards;
-}
+#main-card.show h1 { animation: nameIn .45s .55s forwards; }
 
-h1{
-    font-size:4.5rem;
-    margin:7px 0;
-    color:var(--red);
-    text-shadow:2px 2px #fff,4px 4px #000;
-    opacity:0;
-    transform:scale(.65);
+.age {
+    background: var(--red);
+    color: #fff;
+    padding: 9px 24px;
+    border: 3px solid #000;
+    border-radius: 50px;
+    margin: 12px 0;
+    font-size: 1.8rem;
+    opacity: 0;
+    transform: translateY(-7px);
 }
+#main-card.show .age { animation: fadeDown .35s .72s forwards; }
 
-#main-card.show h1{
-    animation:nameIn .45s .55s forwards;
+/* ================= NOTA & LINK ================= */
+.note {
+    background: #fff3c4;
+    border: 3px solid #000;
+    padding: 16px;
+    margin-top: 14px;
+    transform: rotate(-1deg) scale(.94);
+    opacity: 0;
 }
+#main-card.show .note { animation: noteIn .45s .95s forwards; }
 
-.age{
-    background:var(--red);
-    color:#fff;
-    padding:9px 24px;
-    border:3px solid #000;
-    border-radius:50px;
-    margin:12px 0;
-    font-size:1.8rem;
-    opacity:0;
-    transform:translateY(-7px);
+.detail { font-size: 1.4rem; color: #000; }
+.detail span { display: block; font-weight: 700; }
+.detail small { font-size: 0.8rem; font-weight: normal; opacity: 0.8; }
+
+/* Estilos nuevos para el link del mapa */
+.map-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: transform 0.2s;
+    cursor: pointer;
 }
+.map-link:active { transform: scale(0.96); }
 
-#main-card.show .age{
-    animation:fadeDown .35s .72s forwards;
-}
-
-/* ================= NOTA ================= */
-.note{
-    background:#fff3c4;
-    border:3px solid #000;
-    padding:16px;
-    margin-top:14px;
-    transform:rotate(-1deg) scale(.94);
-    opacity:0;
-}
-
-#main-card.show .note{
-    animation:noteIn .45s .95s forwards;
-}
-
-.detail{
-    font-size:1.4rem;
-}
-
-.detail span{
-    display:block;
-    font-weight:700;
-}
-
-.stamp{
-    margin-top:12px;
-    background:var(--red);
-    color:#fff;
-    padding:7px 12px;
-    display:inline-block;
-    border:3px solid #000;
-    transform:rotate(-4deg);
+.stamp {
+    margin-top: 12px;
+    background: var(--red);
+    color: #fff;
+    padding: 7px 12px;
+    display: inline-block;
+    border: 3px solid #000;
+    transform: rotate(-4deg);
 }
 
 /* ================= SONRISA ================= */
-.grinch-smile{
-    width:90px;
-    height:42px;
-    border-bottom:6px solid var(--dark-green);
-    border-radius:0 0 90px 90px;
-    margin:24px auto 0;
-    transform:scaleX(0);
+.grinch-smile {
+    width: 90px;
+    height: 42px;
+    border-bottom: 6px solid var(--dark-green);
+    border-radius: 0 0 90px 90px;
+    margin: 24px auto 0;
+    transform: scaleX(0);
 }
-
-#main-card.show .grinch-smile{
-    animation:smileIn .45s 1.25s forwards;
-}
+#main-card.show .grinch-smile { animation: smileIn .45s 1.25s forwards; }
 
 /* ================= ANIMACIONES ================= */
-@keyframes cardIn{
-    to{opacity:1;transform:scale(1)}
+@keyframes cardIn { to { opacity: 1; transform: scale(1); } }
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeDown { to { opacity: 1; transform: translateY(0); } }
+@keyframes nameIn { to { opacity: 1; transform: scale(1); } }
+@keyframes noteIn { to { opacity: 1; transform: rotate(-1deg) scale(1); } }
+@keyframes smileIn { to { transform: scaleX(1); } }
+
+@keyframes lookAround {
+    0%, 100% { transform: translate(-50%, -50%); }
+    20% { transform: translate(-40%, -50%); }
+    40% { transform: translate(-60%, -50%); }
+    60% { transform: translate(-50%, -45%); }
+    80% { transform: translate(-50%, -50%); }
 }
-@keyframes fadeUp{
-    to{opacity:1;transform:translateY(0)}
+@keyframes blink {
+    0%, 92%, 100% { transform: scaleY(0); }
+    94%, 96% { transform: scaleY(1); }
 }
-@keyframes fadeDown{
-    to{opacity:1;transform:translateY(0)}
+@keyframes shake {
+    20% { transform: rotate(3deg); }
+    40% { transform: rotate(-3deg); }
+    60% { transform: rotate(4deg); }
+    80% { transform: rotate(-4deg); }
 }
-@keyframes nameIn{
-    to{opacity:1;transform:scale(1)}
+@keyframes pulse { to { opacity: .6; } }
+@keyframes lidFly { to { transform: translateY(-220px) rotate(-35deg); opacity: 0; } }
+@keyframes boxDrop { to { transform: translateY(180px) scale(.85); opacity: 0; } }
+
+/* ================= LUCES ================= */
+.lights {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+    padding: 10px 10px 0;
 }
-@keyframes noteIn{
-    to{opacity:1;transform:rotate(-1deg) scale(1)}
+.lights::before {
+    content: "";
+    position: absolute;
+    left: 10px; right: 10px; top: 10px;
+    height: 3px;
+    background: #1a1a1a;
+    border-radius: 50%;
+    transform: skewX(-6deg);
 }
-@keyframes smileIn{
-    to{transform:scaleX(1)}
+.lights span {
+    position: relative;
+    margin-top: 6px;
+    width: 12px; height: 14px;
+    border-radius: 50% 50% 45% 45%;
+    background: #fcd93b;
+    box-shadow: 0 0 6px rgba(255, 255, 255, .7);
+    animation: twinkle 2.2s infinite ease-in-out, swing 3.8s infinite ease-in-out;
+    transform-origin: top center;
+}
+.lights span::before {
+    content: "";
+    position: absolute;
+    top: -6px; left: 2px;
+    width: 8px; height: 6px;
+    background: #2a2a2a;
+    border-radius: 2px 2px 0 0;
+}
+.lights span:nth-child(3n) { background: #e62225; }
+.lights span:nth-child(4n) { background: #89c926; }
+.lights span:nth-child(odd) { animation-delay: .6s; }
+.lights span:nth-child(5n) { animation-delay: 1.2s; }
+
+@keyframes twinkle {
+    0%, 100% { opacity: .55; box-shadow: 0 0 4px rgba(255, 255, 255, .5); }
+    50% { opacity: 1; box-shadow: 0 0 10px rgba(255, 255, 255, .9); }
+}
+@keyframes swing {
+    0% { transform: rotate(0deg); }
+    50% { transform: rotate(3deg); }
+    100% { transform: rotate(0deg); }
 }
 
-@keyframes lookAround{
-    0%,100%{transform:translate(-50%,-50%)}
-    20%{transform:translate(-40%,-50%)}
-    40%{transform:translate(-60%,-50%)}
-    60%{transform:translate(-50%,-45%)}
-    80%{transform:translate(-50%,-50%)}
-}
-
-@keyframes blink{
-    0%,92%,100%{transform:scaleY(0)}
-    94%,96%{transform:scaleY(1)}
-}
-
-@keyframes shake{
-    20%{transform:rotate(3deg)}
-    40%{transform:rotate(-3deg)}
-    60%{transform:rotate(4deg)}
-    80%{transform:rotate(-4deg)}
-}
-@keyframes pulse{to{opacity:.6}}
-@keyframes lidFly{to{transform:translateY(-220px) rotate(-35deg);opacity:0}}
-@keyframes boxDrop{to{transform:translateY(180px) scale(.85);opacity:0}}
-
-/* ================= FOQUITOS NAVIDEÑOS (ALINEADOS) ================= */
-.lights{
-    position:relative;
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    margin-bottom:14px;
-    padding:10px 10px 0;
-}
-
-/* Cable */
-.lights::before{
-    content:"";
-    position:absolute;
-    left:10px;
-    right:10px;
-    top:10px;                 /* 👈 alineado al origen del foco */
-    height:3px;
-    background:#1a1a1a;
-    border-radius:50%;
-    transform:skewX(-6deg);
-}
-
-/* Foco */
-.lights span{
-    position:relative;
-    margin-top:6px;           /* 👈 cuelga desde el cable */
-    width:12px;
-    height:14px;
-    border-radius:50% 50% 45% 45%;
-    background:#fcd93b;
-    box-shadow:0 0 6px rgba(255,255,255,.7);
-    animation:
-        twinkle 2.2s infinite ease-in-out,
-        swing 3.8s infinite ease-in-out;
-    transform-origin:top center;
-}
-
-/* Casquillo (conector al cable) */
-.lights span::before{
-    content:"";
-    position:absolute;
-    top:-6px;                 /* 👈 conecta visualmente al cable */
-    left:2px;
-    width:8px;
-    height:6px;
-    background:#2a2a2a;
-    border-radius:2px 2px 0 0;
-}
-
-/* Colores */
-.lights span:nth-child(3n){
-    background:#e62225;
-}
-.lights span:nth-child(4n){
-    background:#89c926;
-}
-
-/* Ritmos distintos */
-.lights span:nth-child(odd){
-    animation-delay:.6s;
-}
-.lights span:nth-child(5n){
-    animation-delay:1.2s;
-}
-
-/* Animaciones */
-@keyframes twinkle{
-    0%,100%{
-        opacity:.55;
-        box-shadow:0 0 4px rgba(255,255,255,.5);
-    }
-    50%{
-        opacity:1;
-        box-shadow:0 0 10px rgba(255,255,255,.9);
-    }
-}
-
-@keyframes swing{
-    0%{ transform:rotate(0deg); }
-    50%{ transform:rotate(3deg); }
-    100%{ transform:rotate(0deg); }
+/* RESPONSIVIDAD PARA PANTALLAS MUY PEQUEÑAS (ej. Galaxy Fold) */
+@media (max-width: 360px) {
+    .card { width: 96%; padding: 15px; }
+    h1 { font-size: 3.8rem; }
+    .age { font-size: 1.5rem; padding: 6px 18px; }
 }
