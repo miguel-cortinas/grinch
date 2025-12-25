@@ -1,31 +1,13 @@
-:root {
-    --green: #89c926;
-    --dark-green: #5a8d1b;
-    --red: #e62225;
-    --yellow: #fcd93b;
-    --bg: #0f0f0f;
-    color-scheme: dark;
-}
-
-/* BLOQUEO TOTAL DE MODO CLARO */
-html, body {
-    background-color: #0f0f0f !important;
-    color-scheme: dark;
-}
-
-@media (prefers-color-scheme: light) {
-    html, body {
-        background-color: #0f0f0f !important;
-        color-scheme: dark;
-    }
-}
-
-* {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
+/* =========================================================
+   BLOQUEO TOTAL DE ADAPTACIÓN DE COLOR DEL SISTEMA
+   ========================================================= */
+html {
+    color-scheme: light !important;
 }
 
 body {
+    background-color: #0f0f0f !important;
+    color: #000;
     margin: 0;
     font-family: 'Mountains of Christmas', cursive;
     height: 100vh;
@@ -33,7 +15,32 @@ body {
     overscroll-behavior: none;
 }
 
-/* CANVAS DE NIEVE */
+/* Evita que Android / iOS modifiquen colores */
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    forced-color-adjust: none;
+    -webkit-text-fill-color: initial;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* =========================================================
+   VARIABLES DE COLOR (EXPLÍCITAS)
+   ========================================================= */
+:root {
+    --green: #89c926;
+    --dark-green: #5a8d1b;
+    --red: #e62225;
+    --yellow: #fcd93b;
+}
+
+/* =========================================================
+   CANVAS NIEVE
+   ========================================================= */
 canvas {
     position: fixed;
     inset: 0;
@@ -42,7 +49,9 @@ canvas {
     background: transparent;
 }
 
-/* ================= INTRO ================= */
+/* =========================================================
+   INTRO
+   ========================================================= */
 #intro-screen {
     position: fixed;
     inset: 0;
@@ -60,7 +69,9 @@ canvas {
     pointer-events: none;
 }
 
-/* ================= REGALO ================= */
+/* =========================================================
+   REGALO
+   ========================================================= */
 .gift-container {
     position: relative;
     cursor: pointer;
@@ -137,7 +148,9 @@ canvas {
     animation: boxDrop .6s forwards ease-in;
 }
 
-/* ================= INVITACIÓN ================= */
+/* =========================================================
+   INVITACIÓN
+   ========================================================= */
 #main-card {
     display: none;
     position: fixed;
@@ -171,7 +184,9 @@ canvas {
     text-align: center;
 }
 
-/* ================= OJOS ================= */
+/* =========================================================
+   OJOS
+   ========================================================= */
 .eyes {
     display: flex;
     justify-content: center;
@@ -230,7 +245,9 @@ canvas {
     background: #000;
 }
 
-/* ================= TEXTO ================= */
+/* =========================================================
+   TEXTO
+   ========================================================= */
 h3 {
     margin: 5px 0;
     font-size: 1.2rem;
@@ -271,7 +288,9 @@ h1 {
     animation: fadeDown .35s .72s forwards;
 }
 
-/* ================= NOTA ================= */
+/* =========================================================
+   NOTA
+   ========================================================= */
 .note {
     background: #fff3c4;
     border: 3px solid #000;
@@ -295,12 +314,6 @@ h1 {
     font-weight: 700;
 }
 
-.map-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-}
-
 .stamp {
     margin-top: 12px;
     background: var(--red);
@@ -311,7 +324,9 @@ h1 {
     transform: rotate(-4deg);
 }
 
-/* ================= SONRISA ================= */
+/* =========================================================
+   SONRISA
+   ========================================================= */
 .grinch-smile {
     width: 90px;
     height: 42px;
@@ -325,7 +340,9 @@ h1 {
     animation: smileIn .45s 1.25s forwards;
 }
 
-/* ================= LUCES ================= */
+/* =========================================================
+   LUCES
+   ========================================================= */
 .lights {
     position: relative;
     display: flex;
@@ -357,33 +374,47 @@ h1 {
 .lights span:nth-child(3n) { background: #e62225; }
 .lights span:nth-child(4n) { background: #89c926; }
 
-/* ================= ANIMACIONES ================= */
+/* =========================================================
+   ANIMACIONES
+   ========================================================= */
 @keyframes cardIn { to { opacity: 1; transform: scale(1); } }
 @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 @keyframes fadeDown { to { opacity: 1; transform: translateY(0); } }
 @keyframes nameIn { to { opacity: 1; transform: scale(1); } }
 @keyframes noteIn { to { opacity: 1; transform: rotate(-1deg) scale(1); } }
 @keyframes smileIn { to { transform: scaleX(1); } }
+
 @keyframes blink {
     0%,92%,100% { transform: scaleY(0); }
     94%,96% { transform: scaleY(1); }
 }
+
 @keyframes lookAround {
     0%,100% { transform: translate(-50%,-50%); }
     40% { transform: translate(-60%,-50%); }
     60% { transform: translate(-40%,-50%); }
 }
+
 @keyframes shake {
     20% { transform: rotate(3deg); }
     40% { transform: rotate(-3deg); }
     60% { transform: rotate(4deg); }
     80% { transform: rotate(-4deg); }
 }
-@keyframes pulse { to { opacity: .6; } }
-@keyframes lidFly { to { transform: translateY(-220px) rotate(-35deg); opacity: 0; } }
-@keyframes boxDrop { to { transform: translateY(180px) scale(.85); opacity: 0; } }
 
-/* RESPONSIVO */
+@keyframes pulse { to { opacity: .6; } }
+
+@keyframes lidFly {
+    to { transform: translateY(-220px) rotate(-35deg); opacity: 0; }
+}
+
+@keyframes boxDrop {
+    to { transform: translateY(180px) scale(.85); opacity: 0; }
+}
+
+/* =========================================================
+   RESPONSIVO
+   ========================================================= */
 @media (max-width: 360px) {
     h1 { font-size: 3.8rem; }
     .age { font-size: 1.5rem; }
