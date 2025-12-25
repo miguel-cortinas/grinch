@@ -4,25 +4,33 @@
     --red: #e62225;
     --yellow: #fcd93b;
     --bg: #0f0f0f;
-    
-    /* CRÍTICO: Fuerza a los controles del navegador a ser oscuros */
     color-scheme: dark;
+}
+
+/* BLOQUEO TOTAL DE MODO CLARO */
+html, body {
+    background-color: #0f0f0f !important;
+    color-scheme: dark;
+}
+
+@media (prefers-color-scheme: light) {
+    html, body {
+        background-color: #0f0f0f !important;
+        color-scheme: dark;
+    }
 }
 
 * {
     box-sizing: border-box;
-    /* Deshabilita la selección de texto para que parezca una app nativa */
-    -webkit-tap-highlight-color: transparent; 
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
     margin: 0;
     font-family: 'Mountains of Christmas', cursive;
-    background: var(--bg);
     height: 100vh;
     overflow: hidden;
-    /* Evita el efecto de "rebote" al hacer scroll en los bordes (iOS) */
-    overscroll-behavior: none; 
+    overscroll-behavior: none;
 }
 
 /* CANVAS DE NIEVE */
@@ -31,6 +39,7 @@ canvas {
     inset: 0;
     z-index: 20;
     pointer-events: none;
+    background: transparent;
 }
 
 /* ================= INTRO ================= */
@@ -46,7 +55,10 @@ canvas {
     transition: opacity .6s;
 }
 
-.fade-out { opacity: 0; pointer-events: none; }
+.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
 
 /* ================= REGALO ================= */
 .gift-container {
@@ -72,7 +84,7 @@ canvas {
     height: 40px;
     background: var(--red);
     border-radius: 9px;
-    box-shadow: 0 7px 17px rgba(0, 0, 0, .4);
+    box-shadow: 0 7px 17px rgba(0,0,0,.4);
     z-index: 2;
 }
 
@@ -94,7 +106,8 @@ canvas {
     height: 32px;
 }
 
-.bow::before, .bow::after {
+.bow::before,
+.bow::after {
     content: "";
     position: absolute;
     width: 32px;
@@ -102,7 +115,11 @@ canvas {
     border: 5px solid var(--green);
     border-radius: 50% 50% 0 50%;
 }
-.bow::after { right: 0; transform: scaleX(-1); }
+
+.bow::after {
+    right: 0;
+    transform: scaleX(-1);
+}
 
 .tap-text {
     margin-top: 56px;
@@ -113,8 +130,9 @@ canvas {
 
 /* APERTURA */
 .opening .gift-lid {
-    animation: lidFly .7s forwards cubic-bezier(.2, .8, .3, 1.2);
+    animation: lidFly .7s forwards cubic-bezier(.2,.8,.3,1.2);
 }
+
 .opening .gift-box-bottom {
     animation: boxDrop .6s forwards ease-in;
 }
@@ -143,13 +161,13 @@ canvas {
 }
 
 #main-card.show .card {
-    animation: cardIn .55s cubic-bezier(.25, .9, .35, 1) forwards;
+    animation: cardIn .55s cubic-bezier(.25,.9,.35,1) forwards;
 }
 
 .inner {
     border: 3px dashed #000;
     padding: 20px 16px 24px;
-    background: rgba(255, 255, 255, .15);
+    background: rgba(255,255,255,.15);
     text-align: center;
 }
 
@@ -161,7 +179,10 @@ canvas {
     opacity: 0;
     transform: translateY(-9px);
 }
-#main-card.show .eyes { animation: fadeUp .35s .15s forwards; }
+
+#main-card.show .eyes {
+    animation: fadeUp .35s .15s forwards;
+}
 
 .eye {
     width: 48px;
@@ -172,7 +193,10 @@ canvas {
     position: relative;
     overflow: hidden;
 }
-.eye:last-child { transform: scaleX(-1); }
+
+.eye:last-child {
+    transform: scaleX(-1);
+}
 
 .eye::after {
     content: "";
@@ -191,9 +215,12 @@ canvas {
     position: absolute;
     left: 50%;
     top: 55%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%,-50%);
 }
-#main-card.show .pupil { animation: lookAround 7s 1.4s infinite ease-in-out; }
+
+#main-card.show .pupil {
+    animation: lookAround 7s 1.4s infinite ease-in-out;
+}
 
 .brow {
     position: absolute;
@@ -210,8 +237,10 @@ h3 {
     opacity: 0;
     transform: translateY(9px);
 }
-#main-card.show h3:nth-of-type(1) { animation: fadeUp .35s .32s forwards; }
-#main-card.show h3:nth-of-type(2) { animation: fadeUp .35s .42s forwards; }
+
+#main-card.show h3 {
+    animation: fadeUp .35s .32s forwards;
+}
 
 h1 {
     font-size: 4.5rem;
@@ -221,7 +250,10 @@ h1 {
     opacity: 0;
     transform: scale(.65);
 }
-#main-card.show h1 { animation: nameIn .45s .55s forwards; }
+
+#main-card.show h1 {
+    animation: nameIn .45s .55s forwards;
+}
 
 .age {
     background: var(--red);
@@ -234,9 +266,12 @@ h1 {
     opacity: 0;
     transform: translateY(-7px);
 }
-#main-card.show .age { animation: fadeDown .35s .72s forwards; }
 
-/* ================= NOTA & LINK ================= */
+#main-card.show .age {
+    animation: fadeDown .35s .72s forwards;
+}
+
+/* ================= NOTA ================= */
 .note {
     background: #fff3c4;
     border: 3px solid #000;
@@ -245,21 +280,26 @@ h1 {
     transform: rotate(-1deg) scale(.94);
     opacity: 0;
 }
-#main-card.show .note { animation: noteIn .45s .95s forwards; }
 
-.detail { font-size: 1.4rem; color: #000; }
-.detail span { display: block; font-weight: 700; }
-.detail small { font-size: 0.8rem; font-weight: normal; opacity: 0.8; }
+#main-card.show .note {
+    animation: noteIn .45s .95s forwards;
+}
 
-/* Estilos nuevos para el link del mapa */
+.detail {
+    font-size: 1.4rem;
+    color: #000;
+}
+
+.detail span {
+    display: block;
+    font-weight: 700;
+}
+
 .map-link {
     text-decoration: none;
     color: inherit;
     display: block;
-    transition: transform 0.2s;
-    cursor: pointer;
 }
-.map-link:active { transform: scale(0.96); }
 
 .stamp {
     margin-top: 12px;
@@ -280,7 +320,42 @@ h1 {
     margin: 24px auto 0;
     transform: scaleX(0);
 }
-#main-card.show .grinch-smile { animation: smileIn .45s 1.25s forwards; }
+
+#main-card.show .grinch-smile {
+    animation: smileIn .45s 1.25s forwards;
+}
+
+/* ================= LUCES ================= */
+.lights {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    padding: 10px 10px 0;
+}
+
+.lights::before {
+    content: "";
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    top: 10px;
+    height: 3px;
+    background: #1a1a1a;
+    border-radius: 50%;
+}
+
+.lights span {
+    width: 12px;
+    height: 14px;
+    border-radius: 50% 50% 45% 45%;
+    background: #fcd93b;
+    box-shadow: 0 0 6px rgba(255,255,255,.7);
+    animation: twinkle 2.2s infinite ease-in-out;
+}
+
+.lights span:nth-child(3n) { background: #e62225; }
+.lights span:nth-child(4n) { background: #89c926; }
 
 /* ================= ANIMACIONES ================= */
 @keyframes cardIn { to { opacity: 1; transform: scale(1); } }
@@ -289,17 +364,14 @@ h1 {
 @keyframes nameIn { to { opacity: 1; transform: scale(1); } }
 @keyframes noteIn { to { opacity: 1; transform: rotate(-1deg) scale(1); } }
 @keyframes smileIn { to { transform: scaleX(1); } }
-
-@keyframes lookAround {
-    0%, 100% { transform: translate(-50%, -50%); }
-    20% { transform: translate(-40%, -50%); }
-    40% { transform: translate(-60%, -50%); }
-    60% { transform: translate(-50%, -45%); }
-    80% { transform: translate(-50%, -50%); }
-}
 @keyframes blink {
-    0%, 92%, 100% { transform: scaleY(0); }
-    94%, 96% { transform: scaleY(1); }
+    0%,92%,100% { transform: scaleY(0); }
+    94%,96% { transform: scaleY(1); }
+}
+@keyframes lookAround {
+    0%,100% { transform: translate(-50%,-50%); }
+    40% { transform: translate(-60%,-50%); }
+    60% { transform: translate(-40%,-50%); }
 }
 @keyframes shake {
     20% { transform: rotate(3deg); }
@@ -311,60 +383,8 @@ h1 {
 @keyframes lidFly { to { transform: translateY(-220px) rotate(-35deg); opacity: 0; } }
 @keyframes boxDrop { to { transform: translateY(180px) scale(.85); opacity: 0; } }
 
-/* ================= LUCES ================= */
-.lights {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 14px;
-    padding: 10px 10px 0;
-}
-.lights::before {
-    content: "";
-    position: absolute;
-    left: 10px; right: 10px; top: 10px;
-    height: 3px;
-    background: #1a1a1a;
-    border-radius: 50%;
-    transform: skewX(-6deg);
-}
-.lights span {
-    position: relative;
-    margin-top: 6px;
-    width: 12px; height: 14px;
-    border-radius: 50% 50% 45% 45%;
-    background: #fcd93b;
-    box-shadow: 0 0 6px rgba(255, 255, 255, .7);
-    animation: twinkle 2.2s infinite ease-in-out, swing 3.8s infinite ease-in-out;
-    transform-origin: top center;
-}
-.lights span::before {
-    content: "";
-    position: absolute;
-    top: -6px; left: 2px;
-    width: 8px; height: 6px;
-    background: #2a2a2a;
-    border-radius: 2px 2px 0 0;
-}
-.lights span:nth-child(3n) { background: #e62225; }
-.lights span:nth-child(4n) { background: #89c926; }
-.lights span:nth-child(odd) { animation-delay: .6s; }
-.lights span:nth-child(5n) { animation-delay: 1.2s; }
-
-@keyframes twinkle {
-    0%, 100% { opacity: .55; box-shadow: 0 0 4px rgba(255, 255, 255, .5); }
-    50% { opacity: 1; box-shadow: 0 0 10px rgba(255, 255, 255, .9); }
-}
-@keyframes swing {
-    0% { transform: rotate(0deg); }
-    50% { transform: rotate(3deg); }
-    100% { transform: rotate(0deg); }
-}
-
-/* RESPONSIVIDAD PARA PANTALLAS MUY PEQUEÑAS (ej. Galaxy Fold) */
+/* RESPONSIVO */
 @media (max-width: 360px) {
-    .card { width: 96%; padding: 15px; }
     h1 { font-size: 3.8rem; }
-    .age { font-size: 1.5rem; padding: 6px 18px; }
+    .age { font-size: 1.5rem; }
 }
